@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "bisque-artifacts",
+  "displayName": "Bisque Artifacts",
+  "description": "Publish a plan, a report, a dashboard, or a poll at a link that never changes, update it at the same link, share it with the people who should open it, and answer the comments they leave.",
+  "version": "1.0.0",
+  "author": { "name": "Bisque" },
+  "homepage": "https://bisque.today",
+  "keywords": [
+    "artifacts",
+    "pages",
+    "documents",
+    "sharing",
+    "comments",
+    "bisque"
+  ]
+}
