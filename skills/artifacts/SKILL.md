@@ -39,9 +39,16 @@ the `profile` in a `.bisque.json` in the working directory; failing that the
 profile named `present`, then `default`, then the only usable one. There is
 no anonymous path: an Artifact always belongs to an account.
 
-**When several accounts are configured and none is pinned, ask which one.**
-The Artifact is created in that account, and only that account can update or
-share it later.
+**When several accounts are configured and none is pinned, use the one the
+user's Artifacts already live in.** The Artifact is created in that account,
+and only that account can update or share it later, so the question is whose
+work this is, not how many keys are saved. When the user has consistently
+published from one account — the earlier Artifacts in this conversation or
+project, the links they share, what `list_artifacts` returns for each key —
+publish routine work there without asking. Ask only when ownership is
+genuinely unclear: the accounts both hold recent Artifacts and this one could
+belong to either, or there is no history to go on. Updating an existing
+Artifact always uses the account that owns it.
 
 **No key at all.** Connect the server to the client by URL instead and let
 it sign in; the server's first answer starts the sign-in, and the client
