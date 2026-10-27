@@ -34,8 +34,11 @@ whose profiles look like `profiles.<name>.apiKey`. Pick `$BISQUE_PROFILE`, or
 the `profile` in a `.bisque.json` in the working directory; failing that the
 profile named `present`, then `default`, then the only usable one.
 
-**When several accounts are configured and none is pinned, ask which one.**
-Your replies appear under that person's name.
+**When several accounts are configured and none is pinned, use the one that
+owns the Artifact.** Your replies appear under that person's name, and the
+user has usually published from one account all along. Ask only when
+ownership is genuinely unclear, such as when more than one of the accounts
+can open the Artifact and none of them owns it.
 
 ## 2. Find the threads waiting on you
 
