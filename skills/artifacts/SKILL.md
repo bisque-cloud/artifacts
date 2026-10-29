@@ -1,6 +1,6 @@
 ---
 name: artifacts
-description: Publishes a page or a document at a link that never changes — a plan, a report, a dashboard, a checklist, a poll — and updates it at the same link, shares it with named people, or makes it public. Use when asked to make an artifact, publish a page, write something up as a doc people can open or comment on, build a dashboard or a form, share a link to a report, update or republish a page, or change who can open it.
+description: Publishes a page or a document at a link that never changes — a plan, a report, a dashboard, a checklist, a poll — and updates it at the same link, shares it with named people, or makes it public. Use when asked to make an artifact, publish a page, write something up as a doc people can open or comment on, build a dashboard or a form, share a link to a report, update or republish a page, change who can open it, or read, summarize or answer questions about an Artifact — including when given a bisque.cloud/documents/, /pages/ or /artifacts/ link.
 ---
 
 # Artifacts
@@ -149,12 +149,33 @@ it. `title`, `description` and `icon` change in place, in the same call or on
 their own. A new version keeps the previous one's `capabilities` and state
 rules unless you pass new ones.
 
-Find an Artifact you made earlier with `list_artifacts` (`scope`: `owned`,
-`shared`, or `all`), and read one with `get_artifact`. Never create a second
-Artifact to "update" the first: the link the user already sent would go
-stale.
+Never create a second Artifact to "update" the first: the link the user
+already sent would go stale.
 
-## 5. Share it
+## 5. Read one
+
+The `artifact_id` is the last part of an Artifact's link:
+`https://bisque.cloud/documents/art_4f2c…` is `art_4f2c…`, and the same goes
+for `/pages/art_…` and `/artifacts/art_…`. Pass it to `get_artifact`; that one
+call is the whole read.
+
+```json
+{
+  "name": "get_artifact",
+  "arguments": { "artifact_id": "art_…" }
+}
+```
+
+For a `markdown` document, `content` holds the Markdown source of the version
+readers see. It is `null` for an `html` page, for an Artifact that is not
+published yet, and for a sold Artifact you can view but do not own or edit;
+the summary line says which. Open the `url` to read those. The comments on an
+Artifact come from the `artifact-comments` skill.
+
+Find one you made earlier with `list_artifacts` (`scope`: `owned`, `shared`,
+or `all`).
+
+## 6. Share it
 
 ```json
 {
@@ -191,7 +212,7 @@ public Artifact, so `share_artifact` refuses `public` on one that has threads
 unless `delete_threads` is true. Pass it only after the user has said, in
 words, that the comments can go.
 
-## 6. Delete
+## 7. Delete
 
 `delete_artifact` removes it, and its URL stops working for everyone. Confirm
 first, naming the Artifact by its title.
