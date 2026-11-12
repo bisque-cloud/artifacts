@@ -32,7 +32,20 @@ curl -s -X POST https://bisque.today/mcp \
 Take the key from `$BISQUE_API_KEY`, otherwise from `~/.bisque/config.json`,
 whose profiles look like `profiles.<name>.apiKey`. Pick `$BISQUE_PROFILE`, or
 the `profile` in a `.bisque.json` in the working directory; failing that the
-profile named `present`, then `default`, then the only usable one.
+profile named `present`, then `default`, then the only usable one. With no
+key at all, `bisque login` (or `node present.mjs login`) signs the computer in
+once for every tool that reads that file.
+
+**A profile with no `apiKey`** was signed in by `bisque` 0.25.0 or earlier,
+which kept the key in the macOS keychain, where only that command can read
+it. Have the user run `bisque update` and then `bisque login --profile <name>`
+once; the key then lands in `~/.bisque/config.json` with the rest. Do not read
+the keychain, and do not send them to a different sign-in for the same account.
+
+**A 401 `Invalid API key`** means the key was revoked or replaced. Say so, and
+have the user sign in again as that same profile: `bisque login --profile
+<name>`, or `node present.mjs login --profile <name>` where the `present` skill
+is installed and `bisque` is not. Either writes the new key over the dead one.
 
 **When several accounts are configured and none is pinned, use the one that
 owns the Artifact.** Your replies appear under that person's name, and the

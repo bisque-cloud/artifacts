@@ -50,17 +50,27 @@ genuinely unclear: the accounts both hold recent Artifacts and this one could
 belong to either, or there is no history to go on. Updating an existing
 Artifact always uses the account that owns it.
 
-**No key at all.** Connect the server to the client by URL instead and let
-it sign in; the server's first answer starts the sign-in, and the client
-holds the token from then on. In Claude Code:
+**No key at all.** One sign-in serves every tool that reads
+`~/.bisque/config.json`, this skill included: `bisque login` where the `bisque`
+command is installed, or `node present.mjs login` where the `present` skill
+is. Without either, connect the server to the client by URL and let it sign
+in; the server's first answer starts the sign-in, and the client holds the
+token from then on. In Claude Code:
 
 ```sh
 claude mcp add --transport http bisque https://bisque.today/mcp
 ```
 
-If the `present` skill is installed, `node present.mjs login` saves a key to
-`~/.bisque/config.json` under the profile `present`, and this skill finds it
-there.
+**A profile with no `apiKey`** was signed in by `bisque` 0.25.0 or earlier,
+which kept the key in the macOS keychain, where only that command can read
+it. Have the user run `bisque update` and then `bisque login --profile <name>`
+once; the key then lands in `~/.bisque/config.json` with the rest. Do not read
+the keychain, and do not send them to a different sign-in for the same account.
+
+**A 401 `Invalid API key`** means the key was revoked or replaced. Say so, and
+have the user sign in again as that same profile: `bisque login --profile
+<name>`, or `node present.mjs login --profile <name>` where the `present` skill
+is installed and `bisque` is not. Either writes the new key over the dead one.
 
 ## 2. Write the whole document
 
@@ -216,6 +226,13 @@ words, that the comments can go.
 
 `delete_artifact` removes it, and its URL stops working for everyone. Confirm
 first, naming the Artifact by its title.
+
+## 8. Pin
+
+`pin_artifact` puts an Artifact at the top of the user's own Artifacts
+library, the same as the Pin button there; `unpin_artifact` takes it off. Pin
+when the user asks to keep something where they can find it. A pin is theirs
+alone: it shares nothing and changes nothing about the Artifact.
 
 ## Rules
 
