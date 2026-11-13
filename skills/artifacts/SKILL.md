@@ -227,7 +227,26 @@ words, that the comments can go.
 `delete_artifact` removes it, and its URL stops working for everyone. Confirm
 first, naming the Artifact by its title.
 
-## 8. Pin
+When the user wants something gone later ("keep this for a month", a poll
+that runs a week), pass `expires_in_days` on `create_artifact` or
+`update_artifact` (in a call without `content`), or `expires_at` for a set
+moment. Within a day of it the Artifact is deleted the way `delete_artifact`
+deletes it: it sits in the owner's Trash for 30 days, and then every version,
+comment and file is gone. Set one only when the user asks: without it an
+Artifact is kept. `expires_at: null` cancels it, and only the owner sets or
+cancels one. Tell the user the date.
+
+## 8. Whiteboards
+
+A Whiteboard is an Artifact people and agents draw on together. Make one with
+`create_artifact`, `spec: "bisque-canvas/v1"` and no `content`; `board.shapes`
+starts it with frames, stickies, boxes and arrows. `read_board` reads it as
+structure, frames, shapes and what each arrow connects, so read it before you
+change it or answer a comment about it. `edit_board` adds, moves, restyles or
+removes the shapes you drew, keyed by ids you choose; shapes people drew are
+theirs, read but never changed.
+
+## 9. Pin
 
 `pin_artifact` puts an Artifact at the top of the user's own Artifacts
 library, the same as the Pin button there; `unpin_artifact` takes it off. Pin
